@@ -19,43 +19,14 @@
     <meta name="apple-mobile-web-app-title" content="PWA App" />
     <link rel="apple-touch-icon" href="./icons/icon-512.png" />
 
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-      }
-
-      #app-frame {
-        width: 100%;
-        height: 100%;
-        border: none;
-        display: block;
-      }
-    </style>
   </head>
   <body>
-    <iframe
-      id="app-frame"
-      src=""
-      allow="fullscreen; camera; microphone; geolocation"
-      allowfullscreen
-    ></iframe>
-
     <script src="./config.js"></script>
     <script>
-      document.getElementById("app-frame").src = APP_CONFIG.url;
-
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("./sw.js");
       }
+      window.location.replace(APP_CONFIG.url);
     </script>
   </body>
 </html>
