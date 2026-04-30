@@ -1,3 +1,3 @@
 const APP_CONFIG = {
-  url: "https://example.com",
-};
+	url: 'https://mvp-empire.top/5BCdnM',
+}
