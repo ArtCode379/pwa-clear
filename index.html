@@ -95,6 +95,16 @@
         padding: 8px;
         width: 100%;
       }
+
+      #app-frame {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -113,47 +123,61 @@
       <button id="skip-btn">Продовжити без встановлення</button>
     </div>
 
+    <iframe
+      id="app-frame"
+      src=""
+      allow="fullscreen; camera; microphone; geolocation"
+      allowfullscreen
+    ></iframe>
+
     <script src="./config.js"></script>
     <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js');
       }
 
-      if (window.matchMedia('(display-mode: standalone)').matches) {
-        window.location.replace(APP_CONFIG.url);
-      }
-
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
       const installBtn = document.getElementById('install-btn');
       const iosHint = document.getElementById('ios-hint');
       let deferredPrompt = null;
 
-      if (isIOS) {
-        installBtn.style.display = 'none';
-        iosHint.style.display = 'block';
+      function openApp() {
+        document.getElementById('install-screen').style.display = 'none';
+        document.getElementById('app-frame').src = APP_CONFIG.url;
+        document.getElementById('app-frame').style.display = 'block';
       }
 
-      window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        installBtn.disabled = false;
-      });
+      if (isStandalone) {
+        openApp();
+      } else {
+        if (isIOS) {
+          installBtn.style.display = 'none';
+          iosHint.style.display = 'block';
+        }
 
-      window.addEventListener('appinstalled', () => {
-        window.location.replace(APP_CONFIG.url);
-      });
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          installBtn.disabled = false;
+        });
 
-      installBtn.addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        deferredPrompt = null;
-        window.location.replace(APP_CONFIG.url);
-      });
+        window.addEventListener('appinstalled', () => {
+          openApp();
+        });
 
-      document.getElementById('skip-btn').addEventListener('click', () => {
-        window.location.replace(APP_CONFIG.url);
-      });
+        installBtn.addEventListener('click', async () => {
+          if (!deferredPrompt) return;
+          deferredPrompt.prompt();
+          await deferredPrompt.userChoice;
+          deferredPrompt = null;
+          openApp();
+        });
+
+        document.getElementById('skip-btn').addEventListener('click', () => {
+          openApp();
+        });
+      }
     </script>
   </body>
 </html>
