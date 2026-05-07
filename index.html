@@ -2,31 +2,158 @@
 <html lang="uk">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>PWA App</title>
 
     <link rel="manifest" href="./manifest.json" />
     <meta name="theme-color" content="#1a2151" />
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="PWA App" />
     <link rel="apple-touch-icon" href="./icons/icon-512.png" />
 
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      html, body {
+        width: 100%;
+        height: 100%;
+        background: #1a2151;
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #install-screen {
+        text-align: center;
+        padding: 32px 24px;
+        max-width: 360px;
+        width: 100%;
+      }
+
+      .app-icon {
+        width: 96px;
+        height: 96px;
+        border-radius: 22px;
+        margin: 0 auto 24px;
+        display: block;
+      }
+
+      h1 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.65);
+        margin-bottom: 40px;
+        line-height: 1.5;
+      }
+
+      #install-btn {
+        display: block;
+        width: 100%;
+        padding: 16px;
+        background: #fff;
+        color: #1a2151;
+        border: none;
+        border-radius: 12px;
+        font-size: 17px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 16px;
+        transition: opacity 0.2s;
+      }
+
+      #install-btn:disabled {
+        opacity: 0.4;
+        cursor: default;
+      }
+
+      #ios-hint {
+        display: none;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 1.7;
+        margin-bottom: 16px;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+      }
+
+      #skip-btn {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 14px;
+        cursor: pointer;
+        padding: 8px;
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
+    <div id="install-screen">
+      <img class="app-icon" src="./icons/icon-512.png" alt="" />
+      <h1>PWA App</h1>
+      <p class="subtitle">Встановіть додаток на свій пристрій для швидкого доступу</p>
+
+      <button id="install-btn" disabled>Встановити</button>
+
+      <div id="ios-hint">
+        Натисніть <strong>поділитись</strong> (Share) у Safari,<br>
+        потім виберіть <strong>«На екран "Додому"»</strong>
+      </div>
+
+      <button id="skip-btn">Продовжити без встановлення</button>
+    </div>
+
     <script src="./config.js"></script>
     <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js");
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
       }
-      window.location.replace(APP_CONFIG.url);
+
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        window.location.replace(APP_CONFIG.url);
+      }
+
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      const installBtn = document.getElementById('install-btn');
+      const iosHint = document.getElementById('ios-hint');
+      let deferredPrompt = null;
+
+      if (isIOS) {
+        installBtn.style.display = 'none';
+        iosHint.style.display = 'block';
+      }
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.disabled = false;
+      });
+
+      window.addEventListener('appinstalled', () => {
+        window.location.replace(APP_CONFIG.url);
+      });
+
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        window.location.replace(APP_CONFIG.url);
+      });
+
+      document.getElementById('skip-btn').addEventListener('click', () => {
+        window.location.replace(APP_CONFIG.url);
+      });
     </script>
   </body>
 </html>
