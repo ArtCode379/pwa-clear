@@ -121,39 +121,38 @@
 
       if (window.matchMedia('(display-mode: standalone)').matches) {
         window.location.replace(APP_CONFIG.url);
+      } else {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const installBtn = document.getElementById('install-btn');
+        let deferredPrompt = null;
+
+        if (isIOS) {
+          installBtn.style.display = 'none';
+          document.getElementById('ios-hint').style.display = 'block';
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          installBtn.disabled = false;
+        });
+
+        window.addEventListener('appinstalled', () => {
+          window.location.replace(APP_CONFIG.url);
+        });
+
+        installBtn.addEventListener('click', async () => {
+          if (!deferredPrompt) return;
+          deferredPrompt.prompt();
+          await deferredPrompt.userChoice;
+          deferredPrompt = null;
+          window.location.replace(APP_CONFIG.url);
+        });
+
+        document.getElementById('skip-btn').addEventListener('click', () => {
+          window.location.replace(APP_CONFIG.url);
+        });
       }
-
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      const installBtn = document.getElementById('install-btn');
-      const iosHint = document.getElementById('ios-hint');
-      let deferredPrompt = null;
-
-      if (isIOS) {
-        installBtn.style.display = 'none';
-        iosHint.style.display = 'block';
-      }
-
-      window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        installBtn.disabled = false;
-      });
-
-      window.addEventListener('appinstalled', () => {
-        window.location.replace(APP_CONFIG.url);
-      });
-
-      installBtn.addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        deferredPrompt = null;
-        window.location.replace(APP_CONFIG.url);
-      });
-
-      document.getElementById('skip-btn').addEventListener('click', () => {
-        window.location.replace(APP_CONFIG.url);
-      });
     </script>
   </body>
 </html>

@@ -1,5 +1,12 @@
 const CACHE_NAME = "pwa-app-v1";
-const STATIC_ASSETS = ["./", "./index.html", "./manifest.json", "./config.js"];
+const STATIC_ASSETS = [
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./config.js",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
