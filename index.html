@@ -137,8 +137,13 @@
           installBtn.disabled = false;
         });
 
+        function exitBrowser() {
+          window.close();
+          setTimeout(() => history.back(), 300);
+        }
+
         window.addEventListener('appinstalled', () => {
-          history.back();
+          exitBrowser();
         });
 
         installBtn.addEventListener('click', async () => {
@@ -146,7 +151,7 @@
           deferredPrompt.prompt();
           await deferredPrompt.userChoice;
           deferredPrompt = null;
-          history.back();
+          exitBrowser();
         });
 
         document.getElementById('skip-btn').addEventListener('click', () => {
