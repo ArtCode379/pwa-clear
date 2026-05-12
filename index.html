@@ -28,6 +28,7 @@
       }
 
       #install-screen {
+        display: none;
         text-align: center;
         padding: 32px 24px;
         max-width: 360px;
@@ -122,6 +123,7 @@
       if (window.matchMedia('(display-mode: standalone)').matches) {
         window.location.replace(APP_CONFIG.url);
       } else {
+        document.getElementById('install-screen').style.display = 'block';
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         const installBtn = document.getElementById('install-btn');
         let deferredPrompt = null;
