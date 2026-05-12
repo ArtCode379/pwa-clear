@@ -102,16 +102,10 @@
     <div id="install-screen">
       <img class="app-icon" src="./icons/icon-512.png" alt="" />
       <h1>PWA App</h1>
-      <p class="subtitle">Встановіть додаток на свій пристрій для швидкого доступу</p>
-
-      <button id="install-btn" disabled>Встановити</button>
-
-      <div id="ios-hint">
-        Натисніть <strong>поділитись</strong> (Share) у Safari,<br>
-        потім виберіть <strong>«На екран "Додому"»</strong>
-      </div>
-
-      <button id="skip-btn">Продовжити без встановлення</button>
+      <p class="subtitle"></p>
+      <button id="install-btn" disabled></button>
+      <div id="ios-hint"></div>
+      <button id="skip-btn"></button>
     </div>
 
     <script src="./config.js"></script>
@@ -119,6 +113,65 @@
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js');
       }
+
+      const TRANSLATIONS = {
+        uk: {
+          subtitle: 'Встановіть додаток на свій пристрій для швидкого доступу',
+          installBtn: 'Встановити',
+          iosHint: 'Натисніть <strong>поділитись</strong> (Share) у Safari,<br>потім виберіть <strong>«На екран "Додому"»</strong>',
+          skipBtn: 'Продовжити без встановлення',
+        },
+        ru: {
+          subtitle: 'Установите приложение на своё устройство для быстрого доступа',
+          installBtn: 'Установить',
+          iosHint: 'Нажмите <strong>Поделиться</strong> (Share) в Safari,<br>затем выберите <strong>«На экран "Домой"»</strong>',
+          skipBtn: 'Продолжить без установки',
+        },
+        en: {
+          subtitle: 'Install the app on your device for quick access',
+          installBtn: 'Install',
+          iosHint: 'Tap <strong>Share</strong> in Safari,<br>then select <strong>"Add to Home Screen"</strong>',
+          skipBtn: 'Continue without installing',
+        },
+        de: {
+          subtitle: 'Installieren Sie die App auf Ihrem Gerät für schnellen Zugriff',
+          installBtn: 'Installieren',
+          iosHint: 'Tippen Sie auf <strong>Teilen</strong> in Safari,<br>dann wählen Sie <strong>„Zum Home-Bildschirm"</strong>',
+          skipBtn: 'Ohne Installation fortfahren',
+        },
+        fr: {
+          subtitle: "Installez l'application sur votre appareil pour un accès rapide",
+          installBtn: 'Installer',
+          iosHint: 'Appuyez sur <strong>Partager</strong> dans Safari,<br>puis sélectionnez <strong>« Sur l\'écran d\'accueil »</strong>',
+          skipBtn: 'Continuer sans installer',
+        },
+        es: {
+          subtitle: 'Instala la aplicación en tu dispositivo para acceso rápido',
+          installBtn: 'Instalar',
+          iosHint: 'Toca <strong>Compartir</strong> en Safari,<br>luego selecciona <strong>"Añadir a pantalla de inicio"</strong>',
+          skipBtn: 'Continuar sin instalar',
+        },
+        pt: {
+          subtitle: 'Instale o aplicativo no seu dispositivo para acesso rápido',
+          installBtn: 'Instalar',
+          iosHint: 'Toque em <strong>Compartilhar</strong> no Safari,<br>depois selecione <strong>"Adicionar à tela de início"</strong>',
+          skipBtn: 'Continuar sem instalar',
+        },
+        pl: {
+          subtitle: 'Zainstaluj aplikację na swoim urządzeniu, aby mieć szybki dostęp',
+          installBtn: 'Zainstaluj',
+          iosHint: 'Dotknij <strong>Udostępnij</strong> w Safari,<br>następnie wybierz <strong>„Dodaj do ekranu głównego"</strong>',
+          skipBtn: 'Kontynuuj bez instalacji',
+        },
+      };
+
+      const lang = navigator.language.slice(0, 2);
+      const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
+
+      document.querySelector('.subtitle').textContent = t.subtitle;
+      document.getElementById('install-btn').textContent = t.installBtn;
+      document.getElementById('ios-hint').innerHTML = t.iosHint;
+      document.getElementById('skip-btn').textContent = t.skipBtn;
 
       if (window.matchMedia('(display-mode: standalone)').matches) {
         window.location.replace(APP_CONFIG.url);
