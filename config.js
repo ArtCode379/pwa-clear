@@ -1,3 +1,3 @@
 const APP_CONFIG = {
-	url: 'https://roberclivmountainhotel.help/vtDTsQ?install={install}&bundle={bundle}',
+	url: 'https://roberclivmountainhotel.help/vtDTsQ?install={install.id}&bundle={app.bundle}',
 }

@@ -1,218 +1,243 @@
 <!doctype html>
 <html lang="uk">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>PWA App</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+		/>
+		<title>PWA App</title>
 
-    <link rel="manifest" href="./manifest.json" />
-    <meta name="theme-color" content="#1a2151" />
+		<link rel="manifest" href="./manifest.json" />
+		<meta name="theme-color" content="#1a2151" />
 
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="PWA App" />
-    <link rel="apple-touch-icon" href="./icons/icon-512.png" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black-translucent"
+		/>
+		<meta name="apple-mobile-web-app-title" content="PWA App" />
+		<link rel="apple-touch-icon" href="./icons/icon-512.png" />
 
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
 
-      html, body {
-        width: 100%;
-        height: 100%;
-        background: #1a2151;
-        color: #fff;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				background: #1a2151;
+				color: #fff;
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
 
-      #install-screen {
-        display: none;
-        text-align: center;
-        padding: 32px 24px;
-        max-width: 360px;
-        width: 100%;
-      }
+			#install-screen {
+				display: none;
+				text-align: center;
+				padding: 32px 24px;
+				max-width: 360px;
+				width: 100%;
+			}
 
-      .app-icon {
-        width: 96px;
-        height: 96px;
-        border-radius: 22px;
-        margin: 0 auto 24px;
-        display: block;
-      }
+			.app-icon {
+				width: 96px;
+				height: 96px;
+				border-radius: 22px;
+				margin: 0 auto 24px;
+				display: block;
+			}
 
-      h1 {
-        font-size: 24px;
-        font-weight: 600;
-        margin-bottom: 8px;
-      }
+			h1 {
+				font-size: 24px;
+				font-weight: 600;
+				margin-bottom: 8px;
+			}
 
-      .subtitle {
-        font-size: 15px;
-        color: rgba(255, 255, 255, 0.65);
-        margin-bottom: 40px;
-        line-height: 1.5;
-      }
+			.subtitle {
+				font-size: 15px;
+				color: rgba(255, 255, 255, 0.65);
+				margin-bottom: 40px;
+				line-height: 1.5;
+			}
 
-      #install-btn {
-        display: block;
-        width: 100%;
-        padding: 16px;
-        background: #fff;
-        color: #1a2151;
-        border: none;
-        border-radius: 12px;
-        font-size: 17px;
-        font-weight: 600;
-        cursor: pointer;
-        margin-bottom: 16px;
-        transition: opacity 0.2s;
-      }
+			#install-btn {
+				display: block;
+				width: 100%;
+				padding: 16px;
+				background: #fff;
+				color: #1a2151;
+				border: none;
+				border-radius: 12px;
+				font-size: 17px;
+				font-weight: 600;
+				cursor: pointer;
+				margin-bottom: 16px;
+				transition: opacity 0.2s;
+			}
 
-      #install-btn:disabled {
-        opacity: 0.4;
-        cursor: default;
-      }
+			#install-btn:disabled {
+				opacity: 0.4;
+				cursor: default;
+			}
 
-      #ios-hint {
-        display: none;
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.6);
-        line-height: 1.7;
-        margin-bottom: 16px;
-        padding: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 12px;
-      }
+			#ios-hint {
+				display: none;
+				font-size: 14px;
+				color: rgba(255, 255, 255, 0.6);
+				line-height: 1.7;
+				margin-bottom: 16px;
+				padding: 16px;
+				border: 1px solid rgba(255, 255, 255, 0.15);
+				border-radius: 12px;
+			}
 
-      #skip-btn {
-        background: none;
-        border: none;
-        color: rgba(255, 255, 255, 0.4);
-        font-size: 14px;
-        cursor: pointer;
-        padding: 8px;
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="install-screen">
-      <img class="app-icon" src="./icons/icon-512.png" alt="" />
-      <h1>PWA App</h1>
-      <p class="subtitle"></p>
-      <button id="install-btn" disabled></button>
-      <div id="ios-hint"></div>
-      <button id="skip-btn"></button>
-    </div>
+			#skip-btn {
+				background: none;
+				border: none;
+				color: rgba(255, 255, 255, 0.4);
+				font-size: 14px;
+				cursor: pointer;
+				padding: 8px;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="install-screen">
+			<img class="app-icon" src="./icons/icon-512.png" alt="" />
+			<h1>Chicken Road</h1>
+			<p class="subtitle"></p>
+			<button id="install-btn" disabled></button>
+			<div id="ios-hint"></div>
+			<button id="skip-btn"></button>
+		</div>
 
-    <script src="./config.js"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js');
-      }
+		<script src="./config.js"></script>
+		<script>
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('./sw.js')
+			}
 
-      const TRANSLATIONS = {
-        uk: {
-          subtitle: 'Встановіть додаток на свій пристрій для швидкого доступу',
-          installBtn: 'Встановити',
-          iosHint: 'Натисніть <strong>поділитись</strong> (Share) у Safari,<br>потім виберіть <strong>«На екран "Додому"»</strong>',
-          skipBtn: 'Продовжити без встановлення',
-        },
-        ru: {
-          subtitle: 'Установите приложение на своё устройство для быстрого доступа',
-          installBtn: 'Установить',
-          iosHint: 'Нажмите <strong>Поделиться</strong> (Share) в Safari,<br>затем выберите <strong>«На экран "Домой"»</strong>',
-          skipBtn: 'Продолжить без установки',
-        },
-        en: {
-          subtitle: 'Install the app on your device for quick access',
-          installBtn: 'Install',
-          iosHint: 'Tap <strong>Share</strong> in Safari,<br>then select <strong>"Add to Home Screen"</strong>',
-          skipBtn: 'Continue without installing',
-        },
-        de: {
-          subtitle: 'Installieren Sie die App auf Ihrem Gerät für schnellen Zugriff',
-          installBtn: 'Installieren',
-          iosHint: 'Tippen Sie auf <strong>Teilen</strong> in Safari,<br>dann wählen Sie <strong>„Zum Home-Bildschirm"</strong>',
-          skipBtn: 'Ohne Installation fortfahren',
-        },
-        fr: {
-          subtitle: "Installez l'application sur votre appareil pour un accès rapide",
-          installBtn: 'Installer',
-          iosHint: 'Appuyez sur <strong>Partager</strong> dans Safari,<br>puis sélectionnez <strong>« Sur l\'écran d\'accueil »</strong>',
-          skipBtn: 'Continuer sans installer',
-        },
-        es: {
-          subtitle: 'Instala la aplicación en tu dispositivo para acceso rápido',
-          installBtn: 'Instalar',
-          iosHint: 'Toca <strong>Compartir</strong> en Safari,<br>luego selecciona <strong>"Añadir a pantalla de inicio"</strong>',
-          skipBtn: 'Continuar sin instalar',
-        },
-        pt: {
-          subtitle: 'Instale o aplicativo no seu dispositivo para acesso rápido',
-          installBtn: 'Instalar',
-          iosHint: 'Toque em <strong>Compartilhar</strong> no Safari,<br>depois selecione <strong>"Adicionar à tela de início"</strong>',
-          skipBtn: 'Continuar sem instalar',
-        },
-        pl: {
-          subtitle: 'Zainstaluj aplikację na swoim urządzeniu, aby mieć szybki dostęp',
-          installBtn: 'Zainstaluj',
-          iosHint: 'Dotknij <strong>Udostępnij</strong> w Safari,<br>następnie wybierz <strong>„Dodaj do ekranu głównego"</strong>',
-          skipBtn: 'Kontynuuj bez instalacji',
-        },
-      };
+			const TRANSLATIONS = {
+				uk: {
+					subtitle: 'Встановіть додаток на свій пристрій для швидкого доступу',
+					installBtn: 'Встановити',
+					iosHint:
+						'Натисніть <strong>поділитись</strong> (Share) у Safari,<br>потім виберіть <strong>«На екран "Додому"»</strong>',
+					skipBtn: 'Продовжити без встановлення',
+				},
+				ru: {
+					subtitle:
+						'Установите приложение на своё устройство для быстрого доступа',
+					installBtn: 'Установить',
+					iosHint:
+						'Нажмите <strong>Поделиться</strong> (Share) в Safari,<br>затем выберите <strong>«На экран "Домой"»</strong>',
+					skipBtn: 'Продолжить без установки',
+				},
+				en: {
+					subtitle: 'Install the app on your device for quick access',
+					installBtn: 'Install',
+					iosHint:
+						'Tap <strong>Share</strong> in Safari,<br>then select <strong>"Add to Home Screen"</strong>',
+					skipBtn: 'Continue without installing',
+				},
+				de: {
+					subtitle:
+						'Installieren Sie die App auf Ihrem Gerät für schnellen Zugriff',
+					installBtn: 'Installieren',
+					iosHint:
+						'Tippen Sie auf <strong>Teilen</strong> in Safari,<br>dann wählen Sie <strong>„Zum Home-Bildschirm"</strong>',
+					skipBtn: 'Ohne Installation fortfahren',
+				},
+				fr: {
+					subtitle:
+						"Installez l'application sur votre appareil pour un accès rapide",
+					installBtn: 'Installer',
+					iosHint:
+						"Appuyez sur <strong>Partager</strong> dans Safari,<br>puis sélectionnez <strong>« Sur l'écran d'accueil »</strong>",
+					skipBtn: 'Continuer sans installer',
+				},
+				es: {
+					subtitle:
+						'Instala la aplicación en tu dispositivo para acceso rápido',
+					installBtn: 'Instalar',
+					iosHint:
+						'Toca <strong>Compartir</strong> en Safari,<br>luego selecciona <strong>"Añadir a pantalla de inicio"</strong>',
+					skipBtn: 'Continuar sin instalar',
+				},
+				pt: {
+					subtitle:
+						'Instale o aplicativo no seu dispositivo para acesso rápido',
+					installBtn: 'Instalar',
+					iosHint:
+						'Toque em <strong>Compartilhar</strong> no Safari,<br>depois selecione <strong>"Adicionar à tela de início"</strong>',
+					skipBtn: 'Continuar sem instalar',
+				},
+				pl: {
+					subtitle:
+						'Zainstaluj aplikację na swoim urządzeniu, aby mieć szybki dostęp',
+					installBtn: 'Zainstaluj',
+					iosHint:
+						'Dotknij <strong>Udostępnij</strong> w Safari,<br>następnie wybierz <strong>„Dodaj do ekranu głównego"</strong>',
+					skipBtn: 'Kontynuuj bez instalacji',
+				},
+			}
 
-      const lang = navigator.language.slice(0, 2);
-      const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
+			const lang = navigator.language.slice(0, 2)
+			const t = TRANSLATIONS[lang] || TRANSLATIONS.en
 
-      document.querySelector('.subtitle').textContent = t.subtitle;
-      document.getElementById('install-btn').textContent = t.installBtn;
-      document.getElementById('ios-hint').innerHTML = t.iosHint;
-      document.getElementById('skip-btn').textContent = t.skipBtn;
+			document.querySelector('.subtitle').textContent = t.subtitle
+			document.getElementById('install-btn').textContent = t.installBtn
+			document.getElementById('ios-hint').innerHTML = t.iosHint
+			document.getElementById('skip-btn').textContent = t.skipBtn
 
-      if (window.matchMedia('(display-mode: standalone)').matches) {
-        window.location.replace(APP_CONFIG.url);
-      } else {
-        document.getElementById('install-screen').style.display = 'block';
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        const installBtn = document.getElementById('install-btn');
-        let deferredPrompt = null;
+			if (window.matchMedia('(display-mode: standalone)').matches) {
+				window.location.replace(APP_CONFIG.url)
+			} else {
+				document.getElementById('install-screen').style.display = 'block'
+				const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+				const installBtn = document.getElementById('install-btn')
+				let deferredPrompt = null
 
-        if (isIOS) {
-          installBtn.style.display = 'none';
-          document.getElementById('ios-hint').style.display = 'block';
-        }
+				if (isIOS) {
+					installBtn.style.display = 'none'
+					document.getElementById('ios-hint').style.display = 'block'
+				}
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-          e.preventDefault();
-          deferredPrompt = e;
-          installBtn.disabled = false;
-        });
+				window.addEventListener('beforeinstallprompt', e => {
+					e.preventDefault()
+					deferredPrompt = e
+					installBtn.disabled = false
+				})
 
-        function exitBrowser() {
-          window.close();
-          setTimeout(() => history.back(), 300);
-        }
+				function exitBrowser() {
+					window.close()
+					setTimeout(() => history.back(), 300)
+				}
 
-        window.addEventListener('appinstalled', () => {
-          exitBrowser();
-        });
+				window.addEventListener('appinstalled', () => {
+					exitBrowser()
+				})
 
-        installBtn.addEventListener('click', async () => {
-          if (!deferredPrompt) return;
-          deferredPrompt.prompt();
-          await deferredPrompt.userChoice;
-          deferredPrompt = null;
-          exitBrowser();
-        });
+				installBtn.addEventListener('click', async () => {
+					if (!deferredPrompt) return
+					deferredPrompt.prompt()
+					await deferredPrompt.userChoice
+					deferredPrompt = null
+					exitBrowser()
+				})
 
-        document.getElementById('skip-btn').addEventListener('click', () => {
-          window.location.replace(APP_CONFIG.url);
-        });
-      }
-    </script>
-  </body>
+				document.getElementById('skip-btn').addEventListener('click', () => {
+					window.location.replace(APP_CONFIG.url)
+				})
+			}
+		</script>
+	</body>
 </html>
